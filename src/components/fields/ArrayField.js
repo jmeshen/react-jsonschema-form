@@ -220,7 +220,7 @@ class ArrayField extends Component {
     return itemsSchema.type === "string" && itemsSchema.minLength > 0;
   }
 
-  asyncSetState(state, options={validate: false}) {
+  asyncSetState(state, options={validate: true}) {
     setState(this, state, () => {
       this.props.onChange(this.state.formData.items, options);
     });
@@ -326,7 +326,7 @@ class ArrayField extends Component {
   };
 
   anyOfOptions(anyOfItems) {
-    return anyOfItems.map(item => ({value: item.type, label: item.type}));
+    return anyOfItems.map(item => ({value: item.title, label: item.title}));
   }
 
   setWidgetType(index, value) {
@@ -335,7 +335,7 @@ class ArrayField extends Component {
     const {definitions} = registry;
     const anyOfItemsSchema = this.getAnyOfItemsSchema();
     const newItems = items.slice();
-    const foundItem = anyOfItemsSchema.find((element) => element.type === value);
+    const foundItem = anyOfItemsSchema.find((element) => element.title === value);
     newItems[index] = getDefaultFormState(foundItem, undefined, definitions);
 
     const newAnyOfItems = [...this.state.anyOfItems];
@@ -405,7 +405,7 @@ class ArrayField extends Component {
           autofocus: autofocus && index === 0,
           onBlur,
           anyOfItemsSchema: anyOfItemsSchema,
-          selectWidgetValue: anyOfItems.length > 0 ? anyOfItems[index].type : ""
+          selectWidgetValue: anyOfItems.length > 0 ? anyOfItems[index].title : ""
         });
       }),
       className: `field field-array field-array-of-${itemsSchema.type}`,

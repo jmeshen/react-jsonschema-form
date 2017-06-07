@@ -97,7 +97,7 @@ function unwrapErrorHandler(errorHandler) {
  * will be used to add custom validation errors for each field.
  */
 export default function validateFormData(formData, schema, customValidate, transformErrors) {
-  let {errors} = jsonValidate(formData, schema);
+  let {errors} = jsonValidate(formData, schema, {nestedErrors: true});
   if (typeof transformErrors === "function") {
     errors = transformErrors(errors);
   }
